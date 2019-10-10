@@ -6,7 +6,7 @@
   var htmlCanvas = document.querySelector("canvas");
   var ctx = htmlCanvas.getContext('2d')
   var bottle = window.document.querySelector('.ccBottle');
-  const bottles = window.document.querySelectorAll('.ccBottle')
+  const bottles = Array.prototype.slice.call(window.document.querySelectorAll('.ccBottle'))  
   console.log(bottles)
   var container = document.querySelector(".container");
 
@@ -63,6 +63,9 @@
   }
 
   function movebottle() {
+    for(const [value, index] of [bottles]){
+      
+    }
     var y1 = waves[bottleComputed.left];
     var y2 = waves[bottleComputed.left + 1];
 
