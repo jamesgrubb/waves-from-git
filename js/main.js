@@ -1,11 +1,13 @@
 /* globals window */
 (function () {
-  var WATER_TOP_COLOR = "rgba(244,0,9,0.8";
+  var WATER_TOP_COLOR = "rgba(244,0,9,0.6";
   var WATER_BOTTOM_COLOR = "#F40009";
 
   var htmlCanvas = document.querySelector("canvas");
   var ctx = htmlCanvas.getContext('2d')
-  var ship = window.document.querySelector('#ship');
+  var bottle = window.document.querySelector('.ccBottle');
+  const bottles = window.document.querySelectorAll('.ccBottle')
+  console.log(bottles)
   var container = document.querySelector(".container");
 
   var screenWidth;
@@ -16,14 +18,14 @@
   var wave2 = {};
   var wave3 = {};
   var waves = {};
-  var shipComputed;
+  var bottleComputed;
+  var bottlesComputed;
 
   var moveWavesId;
-  var moveShipId;
+  var movebottleId;
 
   function value(x, width, numberOfWaves) {
     x = x * numberOfWaves / width * 2 * Math.PI;
-    console.log(`waveLength ${numberOfWaves}`)
     return Math.sin(x);
     
   }
@@ -60,21 +62,20 @@
     requestAnimationFrame(draw);
   }
 
-  function moveShip() {
-    var y1 = waves[shipComputed.left];
-    console.log(waves[0])
-    var y2 = waves[shipComputed.left + 1];
+  function movebottle() {
+    var y1 = waves[bottleComputed.left];
+    var y2 = waves[bottleComputed.left + 1];
 
-    shipComputed.angle = -Math.atan(y1 - y2) + 'rad';
-    shipComputed.top = y1;
-    shipComputed.left +=1;
-    if (shipComputed.left > screenWidth - 1) {
-      shipComputed.left = -10;
+    bottleComputed.angle = -Math.atan(y1 - y2) + 'rad';
+    bottleComputed.top = y1;
+    bottleComputed.left +=1;
+    if (bottleComputed.left > screenWidth - 1) {
+      bottleComputed.left = -10;
     }
 
-    ship.style.transform = 'rotate(' + shipComputed.angle + ')';
-    ship.style.left = shipComputed.left - (screenWidth * shipComputed.widthScreenWidthPercent / 2) + 'px';
-    ship.style.top = shipComputed.top - (screenWidth * shipComputed.widthScreenWidthPercent) + 'px';
+    bottle.style.transform = 'rotate(' + bottleComputed.angle + ')';
+    bottle.style.left = bottleComputed.left - (screenWidth * bottleComputed.widthScreenWidthPercent / 2) + 'px';
+    bottle.style.top = bottleComputed.top - (screenWidth * bottleComputed.widthScreenWidthPercent) + 'px';
   }
 
   function initializeWaves() {
@@ -112,8 +113,8 @@
     clearInterval(moveWavesId);
     moveWavesId = setInterval(moveWaves, 8000 / screenWidth);
 
-    clearInterval(moveShipId);
-    moveShipId = setInterval(moveShip, 10000 / screenWidth);
+    clearInterval(movebottleId);
+    movebottleId = setInterval(movebottle, 10000 / screenWidth);
   }
 
   function recalculateCanvas() {
@@ -129,7 +130,7 @@
     waveLength = 0;
     waves = {};
 
-    shipComputed = {
+    bottleComputed = {
       top: screenHeight / 2,
       left: -10,
       widthScreenWidthPercent: 0.07,
