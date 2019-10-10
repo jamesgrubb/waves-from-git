@@ -1,0 +1,12 @@
+#cocacola{
+    width: 100%;
+    height: auto;
+    z-index: 0;
+    opacity: 1;
+    position: absolute;
+}
+canvas{
+    background: transparent;
+    z-index: 0;
+}
+
